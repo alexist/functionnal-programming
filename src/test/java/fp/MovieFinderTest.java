@@ -11,26 +11,23 @@ import java.util.List;
 public class MovieFinderTest {
 
     List<Movie> movies ;
+
     @Before
     public void setup(){
-
         movies = new ArrayList<>();
+        addMovie("The Matrix");
+        addMovie("A beautiful mind");
+        addMovie("Intouchable");
+        addMovie("Forest Gump");
+    }
+
+
+    private void addMovie(String title) {
         Movie movie = new Movie();
-        movie.setTitle("The Matrix");
-        movies.add(movie);
-
-        movie = new Movie();
-        movie.setTitle("A beautiful mind");
-        movies.add(movie);
-
-        movie = new Movie();
-        movie.setTitle("Intouchable");
-        movies.add(movie);
-
-        movie = new Movie();
-        movie.setTitle("Forest Gump");
+        movie.setTitle(title);
         movies.add(movie);
     }
+
     @Test
     public void findByTitle() {
         MovieFinder movieFinder = new MovieFinder();
@@ -39,6 +36,12 @@ public class MovieFinderTest {
         Assert.assertTrue("Should be empty", searchResult.isEmpty());
 
         searchResult = movieFinder.findByTitle(movies, "mind");
+        Assert.assertEquals(1, searchResult.size());
+        Assert.assertEquals("A beautiful mind", searchResult.get(0).getTitle());
+
+
+        searchResult = movieFinder.findByTitle(movies, "A beautiful mind");
+        Assert.assertEquals(1, searchResult.size());
         Assert.assertEquals("A beautiful mind", searchResult.get(0).getTitle());
 
 
@@ -46,43 +49,7 @@ public class MovieFinderTest {
         Assert.assertEquals(3, searchResult.size());
         Assert.assertEquals("The Matrix", searchResult.get(0).getTitle());
         Assert.assertEquals("A beautiful mind", searchResult.get(1).getTitle());
+        Assert.assertEquals("Intouchable", searchResult.get(2).getTitle());
     }
 
-
-
-    @Test
-    public void findByTitle2() {
-        MovieFinder movieFinder = new MovieFinder();
-
-        List<Movie> searchResult = movieFinder.findByTitle2(movies, "XXXXXXX");
-        Assert.assertTrue("Should be empty", searchResult.isEmpty());
-
-        searchResult = movieFinder.findByTitle2(movies, "mind");
-        Assert.assertEquals("A beautiful mind", searchResult.get(0).getTitle());
-
-
-        searchResult = movieFinder.findByTitle2(movies, "a");
-        Assert.assertEquals(3, searchResult.size());
-        Assert.assertEquals("The Matrix", searchResult.get(0).getTitle());
-        Assert.assertEquals("A beautiful mind", searchResult.get(1).getTitle());
-    }
-
-
-
-    @Test
-    public void findByTitle3() {
-        MovieFinder movieFinder = new MovieFinder();
-
-        List<Movie> searchResult = movieFinder.findByTitle3(movies, "XXXXXXX");
-        Assert.assertTrue("Should be empty", searchResult.isEmpty());
-
-        searchResult = movieFinder.findByTitle3(movies, "mind");
-        Assert.assertEquals("A beautiful mind", searchResult.get(0).getTitle());
-
-
-        searchResult = movieFinder.findByTitle3(movies, "a");
-        Assert.assertEquals(3, searchResult.size());
-        Assert.assertEquals("The Matrix", searchResult.get(0).getTitle());
-        Assert.assertEquals("A beautiful mind", searchResult.get(1).getTitle());
-    }
 }
