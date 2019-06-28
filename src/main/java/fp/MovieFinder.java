@@ -9,7 +9,7 @@ public class MovieFinder {
 
 
 
-    public List<Movie> findByTitle(List<Movie> allMovies, String searchTitle) {
+    public Function<String, Function<List<Movie>, List<Movie>>> findByTitle() {
 
         Function<Predicate<Movie>, Function<List<Movie>, List<Movie>>> filter = moviePredicate -> movies -> movies.stream().filter(moviePredicate).collect(Collectors.toList());
 
@@ -19,11 +19,12 @@ public class MovieFinder {
 
         Function<String, Predicate<Movie>> matches = title -> movie -> isInfixOf.apply(title).compose(getTitle).apply(movie);
 
-        Function<String, Function<List<Movie>, List<Movie>>> findBytitle = title  -> movies -> filter.compose(matches).apply(title).apply(movies);
+        Function<String, Function<List<Movie>, List<Movie>>> findByTitle = title  -> movies -> filter.compose(matches).apply(title).apply(movies);
 
-        List<Movie> result = findBytitle.apply(searchTitle).apply(allMovies);
 
-        return result;
+
+        return findByTitle;
     }
+
 
 }
