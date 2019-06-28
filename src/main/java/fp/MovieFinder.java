@@ -19,11 +19,8 @@ public class MovieFinder {
 
         Function<String, Predicate<Movie>> matches = title -> movie -> isInfixOf.apply(title).compose(getTitle).apply(movie);
 
-        Function<String, Function<List<Movie>, List<Movie>>> findByTitle = title  -> movies -> filter.compose(matches).apply(title).apply(movies);
+        return title  -> movies -> filter.compose(matches).apply(title).apply(movies);
 
-
-
-        return findByTitle;
     }
 
 
