@@ -9,10 +9,10 @@ import java.util.List;
 
 public class MovieFinderTest {
 
-    List<Movie> movies ;
+    List<Movie> movies;
 
     @Before
-    public void setup(){
+    public void setup() {
         movies = new ArrayList<>();
         addMovie("The Matrix");
         addMovie("A beautiful mind");
